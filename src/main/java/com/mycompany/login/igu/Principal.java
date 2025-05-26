@@ -1,20 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package com.mycompany.login.igu;
 
-/**
- *
- * @author valen
- */
+import com.mycompany.login.logica.ControladoraLogica;
+
+
 public class Principal extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Principal
-     */
+    ControladoraLogica controladoraLogica;
+    
     public Principal() {
+        
         initComponents();
+        controladoraLogica = new ControladoraLogica();
     }
 
     /**
@@ -94,6 +91,11 @@ public class Principal extends javax.swing.JFrame {
 
         btnLogin.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
 
         btnLimpiar.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         btnLimpiar.setText("Limpiar");
@@ -105,6 +107,7 @@ public class Principal extends javax.swing.JFrame {
 
         txtMensaje.setEditable(false);
         txtMensaje.setColumns(20);
+        txtMensaje.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         txtMensaje.setRows(5);
         jScrollPane1.setViewportView(txtMensaje);
 
@@ -176,6 +179,16 @@ public class Principal extends javax.swing.JFrame {
         txtContrasenia.setText("");
         txtMensaje.setText("");
     }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+        
+        String usuario = txtUsuario.getText();
+        String contrasenia = txtContrasenia.getText();
+        String mensaje = controladoraLogica.validarUsuario(usuario, contrasenia);
+        
+        txtMensaje.setText(mensaje);
+        
+    }//GEN-LAST:event_btnLoginActionPerformed
 
     
 
