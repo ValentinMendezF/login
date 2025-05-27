@@ -184,9 +184,25 @@ public class Principal extends javax.swing.JFrame {
         
         String usuario = txtUsuario.getText();
         String contrasenia = txtContrasenia.getText();
-        String mensaje = controladoraLogica.validarUsuario(usuario, contrasenia);
+        boolean ok = controladoraLogica.validarUsuario(usuario, contrasenia);
+        if (ok == true){
+            String rol = controladoraLogica.validarRol(usuario);
+            if (rol.equals("admin")){
+                PrincipalAdmin principalAdmin = new PrincipalAdmin(controladoraLogica);
+                principalAdmin.setVisible(true);
+                principalAdmin.setLocationRelativeTo(null);
+                this.dispose();
+            }
+            if (rol.equals("user")){
+                PrincipalUser principalUser = new PrincipalUser(controladoraLogica);
+                principalUser.setVisible(true);
+                principalUser.setLocationRelativeTo(null);
+                this.dispose();
+            }
+        } else{
+            txtMensaje.setText("Usuario o Contraseña incorrectos.");
+        }
         
-        txtMensaje.setText(mensaje);
         
     }//GEN-LAST:event_btnLoginActionPerformed
 

@@ -11,28 +11,36 @@ public class ControladoraLogica {
         controladoraPersistencia = new ControladoraPersistencia();
     }
 
-    public String validarUsuario(String usuario, String contrasenia) {
-        String mensaje = "";
+    public boolean validarUsuario(String usuario, String contrasenia) {
+        //String mensaje = "";
+        boolean ok = false;
         List<Usuario> listaUsuarios = traerUsuarios();
         for (Usuario usu : listaUsuarios) {
             if (usu.getNombreUsuario().equals(usuario)){
                 if (usu.getContrasenia().equals(contrasenia)){
-                    mensaje = "Usuario y contraseña correctos.";
-                    return mensaje;
+                    //mensaje = "Usuario y contraseña correctos.";
+                    ok = true;
+                    return ok;
                 } else{
-                    mensaje = "Contraseña incorrecta.";
-                    return mensaje;
+                    //mensaje = "Contraseña incorrecta.";
+                    ok = false;
+                    return ok;
                 }
             } else{
-                mensaje = "Usuario no encontrado.";
+                //mensaje = "Usuario no encontrado.";
+                ok = false;
             }
 
         }
-        return mensaje;
+        return ok;
     }
 
     private List<Usuario> traerUsuarios() {
         return controladoraPersistencia.traerUsuarios();
+    }
+
+    public String validarRol(String usuario) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }
