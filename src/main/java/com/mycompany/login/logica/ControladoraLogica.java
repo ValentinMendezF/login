@@ -11,36 +11,93 @@ public class ControladoraLogica {
         controladoraPersistencia = new ControladoraPersistencia();
     }
 
-    public boolean validarUsuario(String usuario, String contrasenia) {
+    public Usuario validarUsuario(String usuario, String contrasenia) {
         //String mensaje = "";
-        boolean ok = false;
+        Usuario user = null;
         List<Usuario> listaUsuarios = traerUsuarios();
         for (Usuario usu : listaUsuarios) {
-            if (usu.getNombreUsuario().equals(usuario)){
-                if (usu.getContrasenia().equals(contrasenia)){
+            if (usu.getNombreUsuario().equals(usuario)) {
+                if (usu.getContrasenia().equals(contrasenia)) {
                     //mensaje = "Usuario y contraseña correctos.";
-                    ok = true;
-                    return ok;
-                } else{
+                    user = usu;
+                    return user;
+                } else {
                     //mensaje = "Contraseña incorrecta.";
-                    ok = false;
-                    return ok;
+                    user = null;
+                    return user;
                 }
-            } else{
+            } else {
                 //mensaje = "Usuario no encontrado.";
-                ok = false;
+                user = null;
             }
 
         }
-        return ok;
+        return user;
     }
 
-    private List<Usuario> traerUsuarios() {
+    public List<Usuario> traerUsuarios() {
         return controladoraPersistencia.traerUsuarios();
     }
 
-    public String validarRol(String usuario) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public List<Rol> traerRoles() {
+       return controladoraPersistencia.traerRoles();
     }
 
+    public void crearUsuario(String nombreUsuario, String contrasenia, String rolRecibido) {
+        Usuario usuario = new Usuario();
+        
+        usuario.setNombreUsuario(nombreUsuario);
+        usuario.setContrasenia(contrasenia);
+        
+        Rol rolEncontrado = new Rol();
+        rolEncontrado = traerRol(rolRecibido);
+        if(rolEncontrado != null){
+            usuario.setRol(rolEncontrado);
+        }
+        
+        int id = buscarUltimaId();
+        
+        usuario.setId(id+1);
+        
+        controladoraPersistencia.crearUsuario(usuario);
+    }
+
+    private Rol traerRol(String rolRecibido) {
+        List<Rol> listaRoles = controladoraPersistencia.traerRoles();
+        
+        for(Rol rol : listaRoles){
+            if(rol.getNombreRol().equals(rolRecibido)){
+                return rol;
+            }
+        }
+        return null;
+    }
+
+    private int buscarUltimaId() {
+        List<Usuario> listaUsuarios = traerUsuarios();
+        
+        Usuario usuario = listaUsuarios.get(listaUsuarios.size()-1);
+        return usuario.getId();
+    }
+
+    public void eliminarUsuario(int idUsuario) {
+        controladoraPersistencia.eliminarUsuario(idUsuario);
+    }
+
+    public Usuario traerUsuario(int id_usuario) {
+        return controladoraPersistencia.traerUsuario(id_usuario);
+    }
+
+    public void editarUsuario(Usuario usuario, String nombreUsuario, String contrasenia, String rolRecibido) {
+        usuario.setNombreUsuario(nombreUsuario);
+        usuario.setContrasenia(contrasenia);
+        
+        Rol rolEncontrado = new Rol();
+        rolEncontrado = traerRol(rolRecibido);
+        if(rolEncontrado != null){
+            usuario.setRol(rolEncontrado);
+        }
+        
+        controladoraPersistencia.editarUsuario(usuario);
+    }
 }

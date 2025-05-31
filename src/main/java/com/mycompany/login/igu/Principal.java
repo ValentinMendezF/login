@@ -2,6 +2,7 @@
 package com.mycompany.login.igu;
 
 import com.mycompany.login.logica.ControladoraLogica;
+import com.mycompany.login.logica.Usuario;
 
 
 public class Principal extends javax.swing.JFrame {
@@ -184,17 +185,17 @@ public class Principal extends javax.swing.JFrame {
         
         String usuario = txtUsuario.getText();
         String contrasenia = txtContrasenia.getText();
-        boolean ok = controladoraLogica.validarUsuario(usuario, contrasenia);
-        if (ok == true){
-            String rol = controladoraLogica.validarRol(usuario);
-            if (rol.equals("admin")){
-                PrincipalAdmin principalAdmin = new PrincipalAdmin(controladoraLogica);
+        Usuario user = controladoraLogica.validarUsuario(usuario, contrasenia);
+        if (user != null){
+            String rol = user.getRol().getNombreRol();
+            if (rol.equals("Administrador")){
+                PrincipalAdmin principalAdmin = new PrincipalAdmin(controladoraLogica, user);
                 principalAdmin.setVisible(true);
                 principalAdmin.setLocationRelativeTo(null);
                 this.dispose();
             }
-            if (rol.equals("user")){
-                PrincipalUser principalUser = new PrincipalUser(controladoraLogica);
+            if (rol.equals("Usuario")){
+                PrincipalUser principalUser = new PrincipalUser(controladoraLogica, user);
                 principalUser.setVisible(true);
                 principalUser.setLocationRelativeTo(null);
                 this.dispose();
