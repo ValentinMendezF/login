@@ -158,6 +158,7 @@ public class AltaUsuarios extends javax.swing.JFrame {
         controladoraLogica.crearUsuario(nombreUsuario, contrasenia, rol);
         
         mostrarMensaje("Usuario creado correctamente", "Info", "Creación exitosa");
+        this.dispose();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnLimpiar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiar1ActionPerformed
